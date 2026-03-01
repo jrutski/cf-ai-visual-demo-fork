@@ -7,5 +7,12 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"workers_dev": false,
+	"routes": [
+		{
+			"pattern": "ai-security.automatic-demo.com",
+			"custom_domain": true
+		}
+	]
 }

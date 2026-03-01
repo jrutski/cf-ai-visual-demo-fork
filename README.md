@@ -1,12 +1,12 @@
 # Cloudflare AI Security - Interactive Visual Demo
 
-An interactive, modular frontend web application that visualizes 4 Cloudflare AI security use cases. Each use case features a step-through request-flow diagram showing how requests travel through Cloudflare's stack, with per-step explanations of which product acts and why.
+An interactive, modular frontend web application that visualizes different Cloudflare AI security use cases. Each use case features a step-through request-flow diagram showing how requests travel through Cloudflare's stack, with per-step explanations of which product acts and why.
 
 ## Use Cases
 
 | # | Use Case | Cloudflare Products |
 |---|----------|-------------------|
-| 1 | **Secure Workforce Use of GenAI** | Gateway, Access, DLP, CASB, RBI, AI Gateway |
+| 1 | **Secure Workforce Use of GenAI** | Gateway, Access, DLP, RBI, CASB, AI Gateway |
 | 2 | **Govern AI Agents** | Access (MCP Server Portals), DLP for MCP, Workers |
 | 3 | **Build Securely with AI** | AI Gateway (Caching, Rate Limiting, Guardrails, DLP, Dynamic Routing), Workers |
 | 4 | **Protect AI-Powered Apps** | DDoS protection, Bot Management, WAF, Rate Limiting, Firewall for AI, API Shield |
@@ -90,7 +90,7 @@ npm run deploy      # Deploy to Cloudflare Workers
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| Primary | `#F38020` | Cloudflare orange - active elements, CTAs |
+| Primary | `#F38020` | Cloudflare-like orange - active elements, CTAs |
 | Background | `#0d1117` | Dark theme background |
 | User nodes | `#3B82F6` | Users, devices |
 | Cloudflare nodes | `#F38020` | Cloudflare products |
@@ -99,18 +99,9 @@ npm run deploy      # Deploy to Cloudflare Workers
 | Coming Soon | `#6366F1` | Features in development |
 | Font | Inter / system-sans | |
 
-## Product Accuracy Notes
-
-All product names, capabilities, and feature statuses are verified against the Cloudflare Developer Documentation:
-
-- **Firewall for AI** is in closed beta for Enterprise customers ([docs](https://developers.cloudflare.com/waf/detections/firewall-for-ai/))
-- **AI Gateway Guardrails**, **DLP**, and **Dynamic Routing** are in beta ([docs](https://developers.cloudflare.com/ai-gateway/features/))
-- **DLP for MCP Server Portals** is marked as "Coming Soon" - it is visually labeled accordingly in the UC2 diagram
-- **MCP Server Portals** are in open beta for all plans ([docs](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/))
+## References
 
 > Use [Cloudflare MCP Servers](https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/) for better LLM research and accuracy.
-
-## References
 
 - [Cloudflare AI Security](https://www.cloudflare.com/ai-security/)
 - [Holistic AI Security Learning Path](https://developers.cloudflare.com/learning-paths/holistic-ai-security/concepts/)
@@ -120,6 +111,8 @@ All product names, capabilities, and feature statuses are verified against the C
 - [Firewall for AI](https://developers.cloudflare.com/waf/detections/firewall-for-ai/)
 - [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)
 - [Ruleset Engine Phases](https://developers.cloudflare.com/ruleset-engine/reference/phases-list/)
+
+* * * 
 
 ## Disclaimer
 
