@@ -1,0 +1,14 @@
+{
+  "name": "cf-ai-security-visual-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive visual demo of Cloudflare AI Security use cases",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.69.0"
+  }
+}

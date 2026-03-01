@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC1: Secure Workforce Use of GenAI - Cloudflare AI Security</title>
+  <link rel="stylesheet" href="/styles/theme.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/diagram.css">
+</head>
+<body>
+  <div class="diagram-page">
+    <!-- Header -->
+    <header class="diagram-header">
+      <a class="back-link" href="/">&larr; All Use Cases</a>
+      <span class="uc-badge">UC 1</span>
+      <h1>Secure Workforce Use of GenAI</h1>
+    </header>
+
+    <!-- Flow archetypes -->
+    <div class="flow-archetype-labels">
+      <div class="archetype-label">
+        <span class="archetype-arrow human-ai"></span>
+        Human &rarr; AI (employee to GenAI service)
+      </div>
+      <div class="archetype-label">
+        <span class="archetype-arrow agent-resource"></span>
+        Response path (GenAI &rarr; employee)
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="diagram-content">
+      <!-- Canvas -->
+      <div class="diagram-canvas">
+        <div class="flow-container">
+          <svg class="flow-edges"></svg>
+          <div class="flow-columns">
+            <div class="flow-column col-left">
+              <div class="column-label">On-Ramp</div>
+            </div>
+            <div class="flow-column col-center">
+              <div class="column-label">Cloudflare One</div>
+            </div>
+            <div class="flow-column col-right">
+              <div class="column-label">AI Services</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Panel -->
+      <aside class="diagram-panel">
+        <div class="panel-controls">
+          <button class="btn btn-primary" data-action="play">Play</button>
+          <button class="btn btn-secondary" data-action="prev" disabled>&larr;</button>
+          <button class="btn btn-secondary" data-action="next">&rarr;</button>
+          <button class="btn btn-secondary" data-action="reset">Reset</button>
+          <span class="step-counter">0 / 12</span>
+        </div>
+        <div class="panel-step-info">
+          <div class="step-info-placeholder">
+            <span class="placeholder-icon">&#9654;</span>
+            <p>Press <strong>Play</strong> or use the <strong>arrow keys</strong> to step through the request flow.</p>
+            <p style="font-size: 0.75rem; margin-top: 0.5rem; color: var(--text-muted);">Click any node for details.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Legend -->
+    <footer class="diagram-legend" id="legend"></footer>
+  </div>
+
+  <script type="module">
+    import { FlowEngine } from '/components/flow-engine.js';
+    import { Tooltip } from '/components/tooltip.js';
+    import { Legend } from '/components/legend.js';
+    import { uc1 } from '/data/uc1-steps.js';
+
+    const tooltip = new Tooltip();
+    const legend = new Legend(document.getElementById('legend'));
+
+    const engine = new FlowEngine({
+      steps: uc1.steps,
+      nodes: uc1.nodes,
+      edges: uc1.edges,
+    });
+
+    engine.mount(
+      document.querySelector('.diagram-canvas'),
+      document.querySelector('.diagram-panel')
+    );
+  </script>
+</body>
+</html>

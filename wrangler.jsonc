@@ -1,0 +1,11 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "cf-ai-security-visual-demo",
+	"compatibility_date": "2026-03-01",
+	"assets": {
+		"directory": "./src"
+	},
+	"observability": {
+		"enabled": true
+	}
+}

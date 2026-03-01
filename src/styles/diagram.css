@@ -1,0 +1,827 @@
+/* === Diagram Layout === */
+.diagram-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.diagram-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.diagram-header .back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--text-secondary);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+.diagram-header .back-link:hover {
+  color: var(--cf-orange);
+  opacity: 1;
+}
+
+.diagram-header h1 {
+  font-size: clamp(0.875rem, 2.5vw, 1.25rem);
+  color: var(--text-primary);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diagram-header .uc-badge {
+  font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-cloudflare-bg);
+  color: var(--cf-orange);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* === Main Content Area === */
+.diagram-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* === Canvas (left side) === */
+.diagram-canvas {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  padding: clamp(0.5rem, 1.5vw, 1.25rem) clamp(0.75rem, 2vw, 2rem);
+  min-height: 0;
+}
+
+.flow-container {
+  position: relative;
+  min-width: min(100%, 900px);
+  min-height: 400px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+/* === Column Layout for Nodes === */
+.flow-columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  min-height: 400px;
+  height: 100%;
+  position: relative;
+}
+
+.flow-column {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 1.2vw, 1rem);
+  align-items: center;
+  min-width: 0;
+  z-index: 2;
+  justify-content: space-between;
+}
+
+.flow-column.col-left {
+  flex: 0 0 clamp(130px, 16vw, 200px);
+  padding-top: 1.5rem;
+  justify-content: flex-start;
+  gap: clamp(0.75rem, 1.8vw, 1.375rem);
+}
+
+.flow-column.col-center {
+  flex: 1;
+  max-width: 500px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.flow-column.col-right {
+  flex: 0 0 clamp(130px, 16vw, 200px);
+  padding-top: 1.5rem;
+  justify-content: flex-start;
+  gap: clamp(0.75rem, 1.8vw, 1.375rem);
+}
+
+.column-label {
+  font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* === Nodes === */
+.flow-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.375rem, 0.8vw, 0.625rem);
+  padding: clamp(0.375rem, 0.9vw, 0.625rem) clamp(0.5rem, 1.1vw, 0.875rem);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  width: 100%;
+  max-width: clamp(140px, 18vw, 210px);
+  min-height: clamp(40px, 5.5vw, 50px);
+}
+
+.flow-node:hover {
+  border-color: var(--text-muted);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.flow-node.active {
+  border-color: var(--cf-orange);
+  box-shadow: var(--shadow-glow-orange);
+  z-index: 3;
+}
+
+.flow-node.dimmed {
+  opacity: 0.3;
+  filter: saturate(0.3);
+}
+
+.flow-node .node-icon {
+  font-size: clamp(0.875rem, 1.8vw, 1.25rem);
+  flex-shrink: 0;
+  width: clamp(1.25rem, 2.5vw, 1.75rem);
+  text-align: center;
+}
+
+.flow-node .node-label {
+  font-size: clamp(0.6875rem, 1.3vw, 0.8125rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.35;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.flow-node .node-sublabel {
+  font-size: clamp(0.5625rem, 1vw, 0.6875rem);
+  color: var(--text-muted);
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Extra spacing for nodes that have a labeled edge to the next same-column node.
+   The .has-labeled-edge class is added by flow-engine.js at render time. */
+.flow-node.has-labeled-edge {
+  margin-bottom: clamp(0.375rem, 1vw, 0.75rem);
+}
+
+/* Node type coloring */
+.flow-node[data-type="user"] { border-color: var(--color-user); background: var(--color-user-bg); }
+.flow-node[data-type="device"] { border-color: var(--color-device); background: var(--color-device-bg); }
+.flow-node[data-type="cloudflare"] { border-color: var(--color-cloudflare); background: var(--color-cloudflare-bg); }
+.flow-node[data-type="ai-service"] { border-color: var(--color-ai-service); background: var(--color-ai-service-bg); }
+.flow-node[data-type="resource"] { border-color: var(--color-resource); background: var(--color-resource-bg); }
+.flow-node[data-type="coming-soon"] { border-color: var(--color-coming-soon); background: var(--color-coming-soon-bg); }
+
+.flow-node[data-type="user"].dimmed,
+.flow-node[data-type="device"].dimmed,
+.flow-node[data-type="cloudflare"].dimmed,
+.flow-node[data-type="ai-service"].dimmed,
+.flow-node[data-type="resource"].dimmed,
+.flow-node[data-type="coming-soon"].dimmed {
+  border-color: var(--border-color);
+  background: var(--bg-card);
+}
+
+/* Coming soon badge */
+.flow-node .coming-soon-badge {
+  position: absolute;
+  top: -7px;
+  right: -3px;
+  font-size: clamp(0.4375rem, 0.9vw, 0.5625rem);
+  padding: 1px 5px;
+  border-radius: 8px;
+  background: var(--color-coming-soon);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* === SVG Edges === */
+.flow-edges {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.flow-edge {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 1.5;
+  stroke-opacity: 0.7;
+  transition: all var(--transition-base);
+}
+
+.flow-edge.active {
+  stroke: var(--cf-orange);
+  stroke-width: 2.25;
+  stroke-opacity: 1;
+  filter: drop-shadow(0 0 4px rgba(243, 128, 32, 0.4));
+}
+
+.flow-edge.dimmed {
+  stroke: var(--border-light);
+  opacity: 0.15;
+}
+
+.flow-edge-label {
+  font-size: clamp(0.5625rem, 1.1vw, 0.6875rem);
+  font-weight: 500;
+  fill: var(--text-secondary);
+  text-anchor: middle;
+  transition: fill var(--transition-base);
+  paint-order: stroke;
+  stroke: var(--bg-primary);
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.flow-edge-label.active {
+  fill: var(--cf-orange);
+  font-weight: 600;
+}
+
+/* Animated packet dot */
+.packet-dot {
+  r: 3.5;
+  fill: var(--cf-orange);
+  filter: drop-shadow(0 0 5px rgba(243, 128, 32, 0.5));
+}
+
+/* Arrow markers */
+.edge-arrow {
+  fill: var(--border-color);
+}
+.edge-arrow.active {
+  fill: var(--cf-orange);
+}
+
+/* === Side Panel === */
+.diagram-panel {
+  width: clamp(260px, 28vw, 360px);
+  flex-shrink: 0;
+  border-left: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: clamp(0.5rem, 1.2vw, 1rem);
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: clamp(0.35rem, 0.8vw, 0.5rem) clamp(0.625rem, 1.2vw, 1rem);
+  border-radius: var(--radius-sm);
+  font-size: clamp(0.6875rem, 1.3vw, 0.8125rem);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background: var(--cf-orange);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--cf-orange-dark);
+}
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+.btn-secondary:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.step-counter {
+  font-size: clamp(0.6875rem, 1.3vw, 0.8125rem);
+  color: var(--text-secondary);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+/* === Step Info === */
+.panel-step-info {
+  flex: 1;
+  overflow-y: auto;
+  padding: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.step-info-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.625rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: clamp(1rem, 2vw, 2rem);
+}
+
+.step-info-placeholder .placeholder-icon {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  opacity: 0.5;
+}
+
+.step-title {
+  font-size: clamp(0.8125rem, 1.6vw, 1rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(1.25rem, 2vw, 1.5rem);
+  height: clamp(1.25rem, 2vw, 1.5rem);
+  border-radius: 50%;
+  background: var(--cf-orange);
+  color: #fff;
+  font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+  font-weight: 700;
+  margin-right: 0.375rem;
+  flex-shrink: 0;
+}
+
+.step-product {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-cloudflare-bg);
+  color: var(--cf-orange);
+  font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+  font-weight: 500;
+  margin: 0.375rem 0;
+}
+
+.step-description {
+  font-size: clamp(0.6875rem, 1.3vw, 0.8125rem);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-top: 0.625rem;
+}
+
+.step-why {
+  margin-top: 0.75rem;
+  padding: clamp(0.5rem, 1vw, 0.75rem);
+  border-radius: var(--radius-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+.step-why-label {
+  font-size: clamp(0.5625rem, 1.1vw, 0.6875rem);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cf-orange);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.step-why p {
+  font-size: clamp(0.6875rem, 1.3vw, 0.8125rem);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.step-docs-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--cf-orange);
+  font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+.step-docs-link:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--cf-orange);
+  opacity: 1;
+}
+
+/* === Flow Direction Indicators === */
+.flow-archetype-labels {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  padding: 0 0.5rem;
+}
+
+.archetype-label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: clamp(0.5625rem, 1.1vw, 0.6875rem);
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.archetype-arrow {
+  display: inline-block;
+  width: clamp(24px, 4vw, 40px);
+  height: 2px;
+  position: relative;
+}
+
+.archetype-arrow.human-ai {
+  background: var(--color-user);
+}
+.archetype-arrow.human-ai::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -3px;
+  border: 4px solid transparent;
+  border-left: 6px solid var(--color-user);
+}
+
+.archetype-arrow.agent-resource {
+  background: var(--color-ai-service);
+}
+.archetype-arrow.agent-resource::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -3px;
+  border: 4px solid transparent;
+  border-left: 6px solid var(--color-ai-service);
+}
+
+/* === Legend (Bottom bar) === */
+.diagram-legend {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.625rem, 1.5vw, 1.25rem);
+  padding: 0.5rem clamp(0.75rem, 2vw, 1.5rem);
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: clamp(0.5625rem, 1.1vw, 0.6875rem);
+  color: var(--text-muted);
+}
+
+.legend-dot {
+  width: clamp(6px, 1vw, 8px);
+  height: clamp(6px, 1vw, 8px);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legend-dot.user { background: var(--color-user); }
+.legend-dot.cloudflare { background: var(--color-cloudflare); }
+.legend-dot.ai-service { background: var(--color-ai-service); }
+.legend-dot.resource { background: var(--color-resource); }
+.legend-dot.coming-soon { background: var(--color-coming-soon); }
+
+/* === Tooltip === */
+.tooltip-overlay {
+  position: fixed;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.tooltip-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tooltip-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.875rem;
+  box-shadow: var(--shadow-lg);
+  max-width: min(280px, 80vw);
+  min-width: 180px;
+}
+
+.tooltip-card h4 {
+  font-size: clamp(0.75rem, 1.4vw, 0.875rem);
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.tooltip-card p {
+  font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.tooltip-card .tooltip-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.375rem;
+  font-size: clamp(0.5625rem, 1.1vw, 0.6875rem);
+  color: var(--cf-orange);
+  pointer-events: auto;
+}
+
+/* ===================================================================
+   RESPONSIVE BREAKPOINTS
+   =================================================================== */
+
+/* MacBook Pro / laptop screens (<=1440px) — optimize for Retina laptop viewing */
+@media (max-width: 1440px) {
+  .flow-column {
+    gap: clamp(0.5rem, 1.2vw, 0.875rem);
+  }
+
+  .flow-node {
+    max-width: clamp(140px, 17vw, 195px);
+    min-height: clamp(38px, 5vw, 48px);
+    padding: clamp(0.3rem, 0.8vw, 0.5rem) clamp(0.5rem, 1vw, 0.75rem);
+  }
+
+  .diagram-panel {
+    width: clamp(260px, 26vw, 340px);
+  }
+}
+
+/* Large tablets / small desktops (<=1200px) */
+@media (max-width: 1200px) {
+  .diagram-panel {
+    width: clamp(240px, 30vw, 300px);
+  }
+
+  .flow-column.col-left,
+  .flow-column.col-right {
+    flex: 0 0 clamp(120px, 16vw, 180px);
+  }
+}
+
+/* Tablets (<=1024px): Stack layout vertically */
+@media (max-width: 1024px) {
+  .diagram-content {
+    flex-direction: column;
+  }
+
+  .diagram-panel {
+    width: 100%;
+    max-height: 40vh;
+    min-height: 200px;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .diagram-canvas {
+    min-height: 50vh;
+    flex: 1;
+  }
+
+  .flow-container {
+    min-width: 100%;
+    height: auto;
+  }
+
+  .flow-columns {
+    height: auto;
+  }
+
+  .flow-column.col-center {
+    justify-content: flex-start;
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+  }
+
+  .flow-column.col-left,
+  .flow-column.col-right {
+    flex: 0 0 clamp(110px, 18vw, 160px);
+  }
+}
+
+/* Small tablets / large phones (<=768px) */
+@media (max-width: 768px) {
+  .diagram-header {
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .flow-columns {
+    gap: clamp(0.5rem, 2vw, 1rem);
+  }
+
+  .flow-column.col-left,
+  .flow-column.col-right {
+    flex: 0 0 clamp(90px, 16vw, 130px);
+  }
+
+  .flow-node {
+    max-width: clamp(90px, 16vw, 160px);
+    padding: 0.375rem 0.5rem;
+    gap: 0.25rem;
+  }
+
+  .flow-node.has-labeled-edge {
+    margin-bottom: clamp(0.5rem, 1.2vw, 0.75rem);
+  }
+
+  .flow-node .node-icon {
+    font-size: 0.875rem;
+    width: 1.125rem;
+  }
+
+  .flow-node .node-label {
+    font-size: 0.5625rem;
+  }
+
+  .flow-node .node-sublabel {
+    font-size: 0.4375rem;
+  }
+
+  .flow-archetype-labels {
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .panel-controls {
+    padding: 0.5rem;
+    gap: 0.25rem;
+  }
+
+  .btn {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.6875rem;
+  }
+
+  .diagram-legend {
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+  }
+}
+
+/* Phones (<=480px): Compact mode with horizontal scroll for diagram */
+@media (max-width: 480px) {
+  .diagram-header h1 {
+    font-size: 0.8125rem;
+  }
+
+  .diagram-header .back-link {
+    font-size: 0.6875rem;
+  }
+
+  .diagram-canvas {
+    padding: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .flow-container {
+    min-width: 600px;
+    min-height: 350px;
+  }
+
+  .flow-columns {
+    min-height: 350px;
+  }
+
+  .flow-node.has-labeled-edge {
+    margin-bottom: clamp(0.375rem, 1vw, 0.625rem);
+  }
+
+  .diagram-panel {
+    max-height: 45vh;
+  }
+
+  .panel-step-info {
+    padding: 0.625rem;
+  }
+
+  .step-description {
+    font-size: 0.6875rem;
+    line-height: 1.55;
+  }
+
+  .step-why {
+    padding: 0.5rem;
+  }
+
+  .step-why p {
+    font-size: 0.6875rem;
+  }
+
+  .flow-node .coming-soon-badge {
+    font-size: 0.375rem;
+    padding: 1px 3px;
+    top: -5px;
+    right: -2px;
+  }
+}
+
+/* Very small screens (<=360px) */
+@media (max-width: 360px) {
+  .flow-container {
+    min-width: 500px;
+  }
+
+  .diagram-header {
+    padding: 0.375rem 0.5rem;
+  }
+
+  .panel-controls {
+    padding: 0.375rem;
+  }
+
+  .btn {
+    padding: 0.25rem 0.375rem;
+    font-size: 0.625rem;
+  }
+
+  .step-counter {
+    font-size: 0.625rem;
+  }
+}
+
+/* Landscape phones: give more vertical space to diagram */
+@media (max-height: 500px) and (orientation: landscape) {
+  .diagram-content {
+    flex-direction: row;
+  }
+
+  .diagram-panel {
+    width: clamp(220px, 30vw, 280px);
+    max-height: none;
+    border-left: 1px solid var(--border-color);
+    border-top: none;
+  }
+
+  .diagram-header {
+    padding: 0.375rem 0.75rem;
+  }
+
+  .diagram-header h1 {
+    font-size: 0.875rem;
+  }
+
+  .flow-archetype-labels {
+    margin-bottom: 0.375rem;
+  }
+}

@@ -1,0 +1,128 @@
+# Cloudflare AI Security - Interactive Visual Demo
+
+An interactive, modular frontend web application that visualizes 4 Cloudflare AI security use cases. Each use case features a step-through request-flow diagram showing how requests travel through Cloudflare's stack, with per-step explanations of which product acts and why.
+
+## Use Cases
+
+| # | Use Case | Cloudflare Products |
+|---|----------|-------------------|
+| 1 | **Secure Workforce Use of GenAI** | Gateway, Access, DLP, CASB, RBI, AI Gateway |
+| 2 | **Govern AI Agents** | Access (MCP Server Portals), DLP for MCP, Workers |
+| 3 | **Build Securely with AI** | AI Gateway (Caching, Rate Limiting, Guardrails, DLP, Dynamic Routing), Workers |
+| 4 | **Protect AI-Powered Apps** | DDoS protection, Bot Management, WAF, Rate Limiting, Firewall for AI, API Shield |
+
+## How It Works
+
+Each use case presents an interactive diagram with three spatial columns:
+
+- **Left** - Origin actors (human users, AI agents, devices)
+- **Center** - Cloudflare control plane (product-specific nodes)
+- **Right** - Destination resources (AI services, APIs, internal apps)
+
+Users can:
+- **Play** through the flow automatically or step manually with arrow keys
+- **Click any node** to see a tooltip with product description and documentation link
+- **Read the side panel** for each step's title, acting product, description, and "why it matters" context
+
+Two primary flow archetypes are visualized:
+1. **Human -> AI**: User-initiated requests flowing through Cloudflare controls to AI services
+2. **Agentic AI -> Resources**: AI agent-initiated calls flowing through Cloudflare controls to downstream APIs, data, or other agents
+
+## Project Structure
+
+```
+src/
+  index.html                          Landing page with 4 use case cards
+  use-cases/
+    uc1-genai-workforce.html          UC1: Secure Workforce Use of GenAI
+    uc2-govern-agents.html            UC2: Govern AI Agents (MCP)
+    uc3-build-with-ai.html            UC3: Build Securely with AI
+    uc4-protect-ai-apps.html          UC4: Protect AI-Powered Apps
+  components/
+    flow-engine.js                    Shared step-through animation controller
+    tooltip.js                        Per-node contextual overlay
+    legend.js                         Product legend renderer
+  styles/
+    base.css                          Reset, typography, utilities
+    theme.css                         Design tokens (Cloudflare orange #F38020)
+    diagram.css                       Diagram layout, nodes, edges, panel
+  data/
+    uc1-steps.js                      UC1 nodes, edges, step definitions
+    uc2-steps.js                      UC2 nodes, edges, step definitions
+    uc3-steps.js                      UC3 nodes, edges, step definitions
+    uc4-steps.js                      UC4 nodes, edges, step definitions
+wrangler.jsonc                        Cloudflare Workers Static Assets config
+package.json
+```
+
+## Architecture
+
+- **Vanilla JS** - No frameworks, no build step. ES modules loaded natively in the browser.
+- **Modular** - Adding a new use case requires only a new `ucN-steps.js` data file and a new HTML page. Zero changes to the shared engine.
+- **FlowEngine** is fully reusable: feed it `{ steps, nodes, edges }` and it renders the complete interactive diagram with SVG edge paths, animated packet dots, and step-through controls.
+
+## Deployment
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/DavidJKTofan/cf-ai-security-visual-demo)
+
+This project deploys as a purely static site via [Cloudflare Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/). No Worker script is needed - Wrangler serves the `src/` directory directly from Cloudflare's edge network.
+
+```jsonc
+// wrangler.jsonc
+{
+  "name": "cf-ai-security-visual-demo",
+  "compatibility_date": "2026-03-01",
+  "assets": {
+    "directory": "./src"
+  }
+}
+```
+
+### Commands
+
+```bash
+npm install         # Install dependencies (wrangler)
+npm run dev         # Start local development server
+npm run deploy      # Deploy to Cloudflare Workers
+```
+
+## Design System
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| Primary | `#F38020` | Cloudflare orange - active elements, CTAs |
+| Background | `#0d1117` | Dark theme background |
+| User nodes | `#3B82F6` | Users, devices |
+| Cloudflare nodes | `#F38020` | Cloudflare products |
+| AI Service nodes | `#10B981` | External AI providers |
+| Resource nodes | `#8B5CF6` | APIs, databases, internal services |
+| Coming Soon | `#6366F1` | Features in development |
+| Font | Inter / system-sans | |
+
+## Product Accuracy Notes
+
+All product names, capabilities, and feature statuses are verified against the Cloudflare Developer Documentation:
+
+- **Firewall for AI** is in closed beta for Enterprise customers ([docs](https://developers.cloudflare.com/waf/detections/firewall-for-ai/))
+- **AI Gateway Guardrails**, **DLP**, and **Dynamic Routing** are in beta ([docs](https://developers.cloudflare.com/ai-gateway/features/))
+- **DLP for MCP Server Portals** is marked as "Coming Soon" - it is visually labeled accordingly in the UC2 diagram
+- **MCP Server Portals** are in open beta for all plans ([docs](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/))
+
+> Use [Cloudflare MCP Servers](https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/) for better LLM research and accuracy.
+
+## References
+
+- [Cloudflare AI Security](https://www.cloudflare.com/ai-security/)
+- [Holistic AI Security Learning Path](https://developers.cloudflare.com/learning-paths/holistic-ai-security/concepts/)
+- [AI Gateway Documentation](https://developers.cloudflare.com/ai-gateway/)
+- [Cloudflare One AI Security Analytics](https://developers.cloudflare.com/cloudflare-one/insights/analytics/ai-security/)
+- [MCP Server Portals](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/)
+- [Firewall for AI](https://developers.cloudflare.com/waf/detections/firewall-for-ai/)
+- [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)
+- [Ruleset Engine Phases](https://developers.cloudflare.com/ruleset-engine/reference/phases-list/)
+
+## Disclaimer
+
+**This project is for educational and demonstration purposes only.** 
+
+It is not affiliated with, endorsed by, or officially associated with Cloudflare, Inc. All product names, logos, and brands referenced are property of their respective owners. The information presented in the diagrams is based on publicly available documentation and may not reflect the most current product capabilities or configurations. Always refer to the [official Cloudflare documentation](https://developers.cloudflare.com/) for authoritative and up-to-date information.

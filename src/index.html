@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloudflare AI Security</title>
+  <link rel="stylesheet" href="/styles/theme.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <style>
+    /* === Landing Page Styles === */
+    .landing {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .landing-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: clamp(0.75rem, 2vw, 1.5rem) clamp(1rem, 3vw, 2rem);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .landing-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .landing-logo svg {
+      width: clamp(24px, 4vw, 32px);
+      height: clamp(24px, 4vw, 32px);
+    }
+
+    .landing-logo span {
+      font-size: clamp(0.875rem, 2vw, 1.125rem);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .landing-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem);
+    }
+
+    .landing-title {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+      font-size: clamp(1.25rem, 4vw, 2rem);
+    }
+
+    .landing-title span {
+      color: var(--cf-orange);
+    }
+
+    .landing-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: clamp(0.8125rem, 2vw, 1rem);
+      max-width: 600px;
+      margin-bottom: clamp(1.5rem, 4vw, 3rem);
+      line-height: 1.6;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: clamp(0.75rem, 2vw, 1.25rem);
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .uc-card {
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-card);
+      transition: all var(--transition-base);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .uc-card:hover {
+      border-color: var(--cf-orange);
+      box-shadow: var(--shadow-glow-orange);
+      transform: translateY(-2px);
+      opacity: 1;
+    }
+
+    .uc-card-number {
+      font-size: clamp(0.5625rem, 1.2vw, 0.6875rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cf-orange);
+      margin-bottom: 0.5rem;
+    }
+
+    .uc-card h3 {
+      font-size: clamp(0.9375rem, 2vw, 1.125rem);
+      color: var(--text-primary);
+      margin-bottom: 0.375rem;
+      line-height: 1.35;
+    }
+
+    .uc-card p {
+      font-size: clamp(0.6875rem, 1.5vw, 0.8125rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+      flex: 1;
+    }
+
+    .uc-card-products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .product-tag {
+      font-size: clamp(0.5rem, 1vw, 0.625rem);
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      background: var(--bg-tertiary);
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+    }
+
+    .uc-card-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: clamp(0.6875rem, 1.5vw, 0.8125rem);
+      font-weight: 500;
+      color: var(--cf-orange);
+    }
+
+    .uc-card-cta .arrow {
+      transition: transform var(--transition-fast);
+    }
+
+    .uc-card:hover .uc-card-cta .arrow {
+      transform: translateX(4px);
+    }
+
+    .uc-card-flow-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: clamp(0.5625rem, 1.1vw, 0.6875rem);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      width: fit-content;
+    }
+
+    .uc-card-flow-type.human-ai {
+      background: rgba(59, 130, 246, 0.1);
+      color: #60A5FA;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .uc-card-flow-type.agent-resource {
+      background: rgba(16, 185, 129, 0.1);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .uc-card-flow-type.both-flows {
+      background: rgba(139, 92, 246, 0.1);
+      color: #A78BFA;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    /* Flow archetypes section */
+    .archetypes-section {
+      margin-top: clamp(1.5rem, 4vw, 3rem);
+      display: flex;
+      justify-content: center;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      flex-wrap: wrap;
+    }
+
+    .archetype-item {
+      display: flex;
+      align-items: center;
+      gap: clamp(0.375rem, 1vw, 0.75rem);
+      padding: clamp(0.5rem, 1.2vw, 0.75rem) clamp(0.75rem, 1.8vw, 1.25rem);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+    }
+
+    .archetype-item .arch-icon {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+    }
+
+    .archetype-item .arch-label {
+      font-size: clamp(0.6875rem, 1.4vw, 0.8125rem);
+      color: var(--text-secondary);
+    }
+
+    .archetype-item .arch-arrow {
+      color: var(--text-muted);
+      font-size: clamp(0.6875rem, 1.4vw, 0.875rem);
+    }
+
+    .archetype-item .cf-label {
+      color: var(--cf-orange);
+      font-weight: 600;
+      font-size: clamp(0.6875rem, 1.4vw, 0.8125rem);
+    }
+
+    .landing-footer {
+      padding: clamp(0.625rem, 1.5vw, 1rem) clamp(1rem, 3vw, 2rem);
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+      color: var(--text-muted);
+    }
+
+    .landing-footer a {
+      color: var(--text-secondary);
+    }
+
+    /* Landing responsive: stack to single column on narrow screens */
+    @media (max-width: 480px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .archetypes-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="landing">
+    <header class="landing-header">
+      <div class="landing-logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#F38020"/>
+          <path d="M22.4 17.6l-1.2-4.1c-.1-.4-.4-.7-.8-.8l-9.8-1.2c-.1 0-.2 0-.2.1-.1.1-.1.1-.1.2l-.2.6c0 .1 0 .2.1.3.1.1.2.1.3.1l7.5.9-2.2 6.4c-.1.2 0 .3.1.4.1.1.3.1.4 0l5.9-2.6c.2-.1.3-.2.2-.3z" fill="white"/>
+          <path d="M17.8 19.5l1.3-3.8c.1-.3 0-.6-.1-.9-.2-.2-.5-.4-.8-.4l-6.8-.8c-.1 0-.1 0-.2.1 0 0-.1.1-.1.2l-.1.5c0 .1 0 .1.1.2 0 0 .1.1.2.1l5.2.6-1.5 4.2c0 .1 0 .2.1.3.1.1.2.1.3 0l2.2-1c.1 0 .2-.1.2-.3z" fill="white" opacity=".7"/>
+        </svg>
+        <span>AI Security</span>
+      </div>
+    </header>
+
+    <main class="landing-main">
+      <h1 class="landing-title">Cloudflare <span>AI Security</span></h1>
+      <p class="landing-subtitle">
+        Interactive visual walkthroughs of how Cloudflare secures AI&nbsp;workloads &mdash; from workforce GenAI usage to protecting AI-powered applications.
+      </p>
+
+      <div class="cards-grid">
+        <!-- UC1 -->
+        <a class="uc-card" href="/use-cases/uc1-genai-workforce.html">
+          <span class="uc-card-number">Use Case 1</span>
+          <span class="uc-card-flow-type human-ai">&#128100; Human &rarr; Cloudflare &rarr; &#129302; AI</span>
+          <h3>Secure Workforce Use of GenAI</h3>
+          <p>Discover and control how employees interact with GenAI tools like ChatGPT, Claude, and Gemini through Cloudflare One SASE.</p>
+          <div class="uc-card-products">
+            <span class="product-tag">Gateway</span>
+            <span class="product-tag">Access</span>
+            <span class="product-tag">DLP</span>
+            <span class="product-tag">CASB</span>
+            <span class="product-tag">RBI</span>
+            <span class="product-tag">AI Gateway</span>
+          </div>
+          <span class="uc-card-cta">Explore flow <span class="arrow">&rarr;</span></span>
+        </a>
+
+        <!-- UC2 -->
+        <a class="uc-card" href="/use-cases/uc2-govern-agents.html">
+          <span class="uc-card-number">Use Case 2</span>
+          <span class="uc-card-flow-type agent-resource">&#129302; Agentic AI &rarr; Cloudflare &rarr; &#128450; Resources</span>
+          <h3>Govern AI Agents</h3>
+          <p>Secure interactions between human users and AI agents via MCP (Model Context Protocol) with Cloudflare Access controls.</p>
+          <div class="uc-card-products">
+            <span class="product-tag">Access</span>
+            <span class="product-tag">MCP Portals</span>
+            <span class="product-tag">DLP for MCP</span>
+            <span class="product-tag">Workers</span>
+          </div>
+          <span class="uc-card-cta">Explore flow <span class="arrow">&rarr;</span></span>
+        </a>
+
+        <!-- UC3 -->
+        <a class="uc-card" href="/use-cases/uc3-build-with-ai.html">
+          <span class="uc-card-number">Use Case 3</span>
+          <span class="uc-card-flow-type both-flows">&#128100; Human / &#129302; Agent &rarr; Cloudflare &rarr; &#129302; AI</span>
+          <h3>Build Securely with AI</h3>
+          <p>Build AI applications and agents with built-in controls using AI Gateway features: caching, rate limiting, guardrails, and DLP.</p>
+          <div class="uc-card-products">
+            <span class="product-tag">AI Gateway</span>
+            <span class="product-tag">Guardrails</span>
+            <span class="product-tag">DLP</span>
+            <span class="product-tag">Dynamic Routing</span>
+            <span class="product-tag">Workers</span>
+          </div>
+          <span class="uc-card-cta">Explore flow <span class="arrow">&rarr;</span></span>
+        </a>
+
+        <!-- UC4 -->
+        <a class="uc-card" href="/use-cases/uc4-protect-ai-apps.html">
+          <span class="uc-card-number">Use Case 4</span>
+          <span class="uc-card-flow-type human-ai">&#128100; End User &rarr; Cloudflare &rarr; &#129302; Your AI App</span>
+          <h3>Protect AI-Powered Apps</h3>
+          <p>Defend applications with AI endpoints against data exfiltration, abuse, prompt injection, and volumetric attacks.</p>
+          <div class="uc-card-products">
+            <span class="product-tag">WAF</span>
+            <span class="product-tag">Bot Management</span>
+            <span class="product-tag">DDoS</span>
+            <span class="product-tag">Firewall for AI</span>
+            <span class="product-tag">API Shield</span>
+            <span class="product-tag">Rate Limiting</span>
+          </div>
+          <span class="uc-card-cta">Explore flow <span class="arrow">&rarr;</span></span>
+        </a>
+      </div>
+
+      <div class="archetypes-section">
+        <div class="archetype-item">
+          <span class="arch-icon">&#128100;</span>
+          <span class="arch-label">Human</span>
+          <span class="arch-arrow">&rarr;</span>
+          <span class="cf-label">Cloudflare</span>
+          <span class="arch-arrow">&rarr;</span>
+          <span class="arch-icon">&#129302;</span>
+          <span class="arch-label">AI</span>
+        </div>
+        <div class="archetype-item">
+          <span class="arch-icon">&#129302;</span>
+          <span class="arch-label">Agentic AI</span>
+          <span class="arch-arrow">&rarr;</span>
+          <span class="cf-label">Cloudflare</span>
+          <span class="arch-arrow">&rarr;</span>
+          <span class="arch-icon">&#128450;</span>
+          <span class="arch-label">Resources</span>
+        </div>
+      </div>
+    </main>
+
+    <footer class="landing-footer">
+      <p>For educational and demonstration purposes only. Not an official Cloudflare demo.</p>
+      <p style="margin-top: 0.375rem;">Deployed on <a href="https://developers.cloudflare.com/workers/static-assets/" target="_blank" rel="noopener">Workers Static Assets</a></p>
+    </footer>
+  </div>
+</body>
+</html>
