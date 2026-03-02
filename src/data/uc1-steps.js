@@ -49,7 +49,7 @@ export const uc1 = {
       type: 'user',
       column: 'left',
       product: 'AI Gateway for Developers',
-      description: 'Software engineers using AI coding assistants (OpenCode, Cursor, Claude Code, etc.). Like all employees, developers route through Cloudflare One for web traffic. When their AI coding tool is configured to use AI Gateway\'s OpenAI-compatible endpoint as the base URL (a one-line change), they gain rate limiting, caching, guardrails, DLP on prompts and responses, and usage analytics.',
+      description: 'Software engineers using AI coding assistants (OpenCode, Cursor, Claude Code, etc.). Developers route through Cloudflare One with an on-ramp method that supports HTTP policies (optimally WARP client). When their AI coding tool is configured to use AI Gateway\'s OpenAI-compatible endpoint as the base URL (a one-line change), they gain rate limiting, caching, guardrails, DLP on prompts and responses, and usage analytics (tokens, latency, etc.).',
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/',
     },
     // Center column — Cloudflare stack (in enforcement order)
@@ -195,7 +195,7 @@ export const uc1 = {
       title: 'Employees & Developers connect',
       product: 'Cloudflare WARP / Connectivity',
       description: 'All employees\' managed devices connect to Cloudflare\'s network via the WARP client (preferred — supports DNS, Network, and HTTP policies). This includes developers using AI coding assistants (OpenCode, Cursor, Claude Code) — their web traffic and AI API calls both route through Cloudflare One.',
-      why: 'Every employee — including software engineers using AI coding tools — connects through the a Cloudflare One on-ramp. This ensures consistent security policies across all workforce AI usage, whether browsing ChatGPT or using an AI coding assistant.',
+      why: 'Every employee — including software engineers using AI coding tools — connects through a Cloudflare One on-ramp. This ensures consistent security policies across all workforce AI usage, whether browsing ChatGPT or using an AI coding assistant.',
       activeNodes: ['employee', 'developer', 'gateway-dns'],
       activeEdges: ['e-emp-dns', 'e-dev-dns'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/networks/connectivity-options/',
