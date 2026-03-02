@@ -135,7 +135,7 @@ export const uc4 = {
 
   edges: [
     { id: 'e-user-edge', from: 'external-user', to: 'cf-edge', label: 'HTTPS', direction: 'ltr' },
-    { id: 'e-attacker-edge', from: 'attacker', to: 'cf-edge', label: 'HTTPS', direction: 'ltr' },
+    { id: 'e-attacker-edge', from: 'attacker', to: 'cf-edge', label: 'Blocked at Edge', direction: 'ltr' },
     { id: 'e-edge-ddos', from: 'cf-edge', to: 'ddos', label: '', direction: 'ltr' },
     { id: 'e-ddos-bot', from: 'ddos', to: 'bot-mgmt', label: '', direction: 'ltr' },
     { id: 'e-bot-waf', from: 'bot-mgmt', to: 'waf', label: '', direction: 'ltr' },
