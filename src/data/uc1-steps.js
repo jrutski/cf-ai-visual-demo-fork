@@ -235,6 +235,7 @@ export const uc1 = {
       activeNodes: ['gateway-http', 'rbi'],
       activeEdges: ['e-http-rbi'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/traffic-policies/http-policies/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure', 'LLM06:2025 Excessive Agency'],
     },
     {
       title: 'RBI isolates high-risk sessions',
@@ -244,6 +245,7 @@ export const uc1 = {
       activeNodes: ['rbi', 'gateway-http'],
       activeEdges: ['e-http-rbi'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/isolate-policy/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure'],
     },
     {
       title: 'DLP + AI Prompt Protection',
@@ -253,6 +255,7 @@ export const uc1 = {
       activeNodes: ['dlp', 'access'],
       activeEdges: ['e-rbi-dlp', 'e-dlp-access'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/data-loss-prevention/',
+      owasp: ['LLM01:2025 Prompt Injection', 'LLM02:2025 Sensitive Information Disclosure', 'ASI01 Agent Goal Hijack'],
     },
     {
       title: 'Access verifies identity',
@@ -262,6 +265,7 @@ export const uc1 = {
       activeNodes: ['access', 'ai-gateway'],
       activeEdges: ['e-access-aig'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/policies/access/',
+      owasp: ['LLM06:2025 Excessive Agency'],
     },
     {
       title: 'AI Gateway logs API calls',
@@ -271,6 +275,7 @@ export const uc1 = {
       activeNodes: ['ai-gateway', 'genai-service'],
       activeEdges: ['e-aig-genai'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure', 'LLM10:2025 Unbounded Consumption', 'ASI02 Tool Misuse & Exploitation'],
     },
     {
       title: 'Request reaches GenAI service',
@@ -289,6 +294,7 @@ export const uc1 = {
       activeNodes: ['genai-service', 'ai-gateway', 'dlp'],
       activeEdges: ['e-genai-aig-resp', 'e-aig-dlp-resp'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/features/dlp/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure'],
     },
     {
       title: 'Response delivered to users',
@@ -307,6 +313,7 @@ export const uc1 = {
       activeNodes: ['casb', 'genai-service'],
       activeEdges: ['e-casb-genai'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/cloud-and-saas-findings/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure'],
     },
     {
       title: 'CASB + DLP scans for sensitive data in SaaS',
@@ -316,6 +323,7 @@ export const uc1 = {
       activeNodes: ['casb', 'dlp'],
       activeEdges: ['e-casb-dlp'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/cloud-and-saas-findings/casb-dlp/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure'],
     },
   ],
 };

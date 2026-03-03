@@ -139,6 +139,7 @@ export const uc2 = {
       activeNodes: ['human-user', 'cf-access'],
       activeEdges: ['e-human-access'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/access-controls/policies/',
+      owasp: ['ASI03 Identity & Privilege Abuse'],
     },
     {
       title: 'Access issues session token',
@@ -157,6 +158,7 @@ export const uc2 = {
       activeNodes: ['ai-agent', 'mcp-portal'],
       activeEdges: ['e-agent-portal'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/',
+      owasp: ['LLM06:2025 Excessive Agency', 'ASI02 Tool Misuse & Exploitation', 'ASI04 Agentic Supply Chain Vulnerabilities'],
     },
     {
       title: 'AI agent sends tool call',
@@ -174,6 +176,7 @@ export const uc2 = {
       activeNodes: ['access-policy', 'dlp-mcp'],
       activeEdges: ['e-policy-dlp'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/',
+      owasp: ['LLM06:2025 Excessive Agency', 'LLM01:2025 Prompt Injection', 'ASI02 Tool Misuse & Exploitation', 'ASI03 Identity & Privilege Abuse'],
     },
     {
       title: 'DLP scans tool inputs/outputs',
@@ -183,6 +186,7 @@ export const uc2 = {
       activeNodes: ['dlp-mcp', 'mcp-server'],
       activeEdges: ['e-dlp-server'],
       docsUrl: 'https://developers.cloudflare.com/cloudflare-one/data-loss-prevention/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure', 'ASI01 Agent Goal Hijack', 'ASI02 Tool Misuse & Exploitation'],
     },
     {
       title: 'MCP server executes tool call',
@@ -192,6 +196,7 @@ export const uc2 = {
       activeNodes: ['mcp-server', 'saas-apps', 'self-hosted', 'custom-workers'],
       activeEdges: ['e-server-saas', 'e-server-hosted', 'e-server-custom'],
       docsUrl: 'https://developers.cloudflare.com/agents/model-context-protocol/',
+      owasp: ['LLM06:2025 Excessive Agency', 'ASI05 Unexpected Code Execution (RCE)'],
     },
     {
       title: 'Agentic calls logged and audited',
@@ -200,6 +205,7 @@ export const uc2 = {
       why: 'Comprehensive audit logging is essential for compliance, incident investigation, and understanding how AI agents interact with organizational resources.',
       activeNodes: ['mcp-server', 'mcp-portal'],
       activeEdges: [],
+      owasp: ['ASI10 Rogue Agents', 'ASI08 Cascading Failures'],
     },
     {
       title: 'Response returns to user',

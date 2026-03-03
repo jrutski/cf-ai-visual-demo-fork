@@ -515,6 +515,21 @@ export class FlowEngine {
       return;
     }
 
+    let owaspHtml = '';
+    if (step.owasp && step.owasp.length > 0) {
+      const hasLLM = step.owasp.some(t => t.startsWith('LLM'));
+      const hasASI = step.owasp.some(t => t.startsWith('ASI'));
+      const owaspTitle = hasLLM && hasASI
+        ? 'OWASP Top 10 for LLMs & Agentic Applications'
+        : hasASI
+          ? 'OWASP Top 10 for Agentic Applications'
+          : 'OWASP Top 10 for LLMs';
+      owaspHtml = `<div class="step-owasp-labels">
+           <div class="step-owasp-header">${owaspTitle}</div>
+           ${step.owasp.map(tag => `<span class="owasp-badge">${tag}</span>`).join('')}
+         </div>`;
+    }
+
     infoEl.innerHTML = `
       <div>
         <div style="display: flex; align-items: center; margin-bottom: 0.25rem;">
@@ -529,6 +544,7 @@ export class FlowEngine {
             <p>${step.why}</p>
           </div>
         ` : ''}
+        ${owaspHtml}
         ${step.docsUrl ? `
           <a class="step-docs-link" href="${step.docsUrl}" target="_blank" rel="noopener">
             Docs &#8599;

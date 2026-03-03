@@ -191,6 +191,7 @@ export const uc3 = {
       activeNodes: ['app-agent', 'developer', 'aig-endpoint'],
       activeEdges: ['e-app-aig', 'e-dev-aig'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/',
+      owasp: ['LLM10:2025 Unbounded Consumption'],
     },
     {
       title: 'Rate limit evaluated',
@@ -200,6 +201,7 @@ export const uc3 = {
       activeNodes: ['aig-endpoint', 'rate-limit'],
       activeEdges: ['e-aig-rl'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/features/rate-limiting/',
+      owasp: ['LLM10:2025 Unbounded Consumption'],
     },
     {
       title: 'Cache check',
@@ -209,6 +211,7 @@ export const uc3 = {
       activeNodes: ['rate-limit', 'cache'],
       activeEdges: ['e-rl-cache'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/features/caching/',
+      owasp: ['LLM10:2025 Unbounded Consumption'],
     },
     {
       title: 'Guardrails evaluate prompt',
@@ -218,6 +221,7 @@ export const uc3 = {
       activeNodes: ['cache', 'guardrails'],
       activeEdges: ['e-cache-guard'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/features/guardrails/',
+      owasp: ['LLM01:2025 Prompt Injection', 'LLM05:2025 Improper Output Handling', 'LLM09:2025 Misinformation', 'ASI01 Agent Goal Hijack'],
     },
     {
       title: 'DLP scans outbound prompt',
@@ -227,6 +231,7 @@ export const uc3 = {
       activeNodes: ['guardrails', 'dlp-aig'],
       activeEdges: ['e-guard-dlp'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/features/dlp/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure'],
     },
     {
       title: 'Dynamic Routing selects provider',
@@ -236,6 +241,7 @@ export const uc3 = {
       activeNodes: ['dynamic-routing', 'llm-openai', 'llm-anthropic', 'llm-google', 'llm-workers-ai', 'llm-other'],
       activeEdges: ['e-dlp-dr', 'e-dr-openai', 'e-dr-anthropic', 'e-dr-google', 'e-dr-workers-ai', 'e-dr-other'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/features/dynamic-routing/',
+      owasp: ['LLM03:2025 Supply Chain', 'ASI04 Agentic Supply Chain Vulnerabilities'],
     },
     {
       title: 'LLM processes request',
@@ -253,6 +259,7 @@ export const uc3 = {
       activeNodes: ['llm-openai', 'dlp-aig'],
       activeEdges: ['e-llm-dlp-resp'],
       docsUrl: 'https://developers.cloudflare.com/ai-gateway/features/dlp/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure'],
     },
     {
       title: 'Workers applies post-processing',

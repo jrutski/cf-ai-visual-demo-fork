@@ -203,6 +203,80 @@ Key corrections made:
 - Node types: `user` `#3B82F6` | `cloudflare` `#F38020` | `ai` `#10B981` | `resource` `#8B5CF6` | `coming-soon` `#EAB308` (amber)
 - Font: Inter / system-sans
 
+## OWASP Framework Mappings
+
+Two OWASP frameworks are mapped to Cloudflare product nodes across all 4 use cases. Labels appear in the step info panel as blue badges.
+
+### Frameworks
+
+1. **OWASP Top 10 for LLMs 2025** — https://genai.owasp.org/llm-top-10/
+2. **OWASP Top 10 for Agentic Applications 2026** — https://owasp.org/www-project-top-10-for-agentic-applications/
+
+### Implementation
+
+- Labels stored as `owasp` array on step objects in `src/data/ucN-steps.js`
+- Rendered by `FlowEngine._renderStepInfo()` in `src/components/flow-engine.js`
+- CSS classes: `.step-owasp-labels`, `.step-owasp-header`, `.owasp-badge` in `src/styles/diagram.css`
+- Both LLM and ASI labels use the same blue badge styling — prefix distinguishes them
+
+### UC1 OWASP Mappings
+
+| Step | Product | LLM Labels | ASI Labels |
+|------|---------|------------|------------|
+| 5 | Gateway HTTP | LLM02, LLM06 | — |
+| 6 | RBI | LLM02 | — |
+| 7 | DLP + AI Prompt Protection | LLM01, LLM02 | ASI01 |
+| 8 | Access | LLM06 | — |
+| 9 | AI Gateway | LLM02, LLM10 | ASI02 |
+| 11 | AI Gateway DLP (response) | LLM02 | — |
+| 13 | CASB | LLM02 | — |
+| 14 | CASB + DLP | LLM02 | — |
+
+### UC2 OWASP Mappings (primary agentic UC)
+
+| Step | Product | LLM Labels | ASI Labels |
+|------|---------|------------|------------|
+| 1 | Cloudflare Access | — | ASI03 |
+| 3 | MCP Server Portal | LLM06 | ASI02, ASI04 |
+| 5 | Access Policy (per-tool) | LLM06, LLM01 | ASI02, ASI03 |
+| 6 | DLP for MCP | LLM02 | ASI01, ASI02 |
+| 7 | MCP Server (Workers) | LLM06 | ASI05 |
+| 8 | Audit logging | — | ASI10, ASI08 |
+
+### UC3 OWASP Mappings
+
+| Step | Product | LLM Labels | ASI Labels |
+|------|---------|------------|------------|
+| 1 | AI Gateway endpoint | LLM10 | — |
+| 2 | Rate Limiting | LLM10 | — |
+| 3 | Caching | LLM10 | — |
+| 4 | Guardrails | LLM01, LLM05, LLM09 | ASI01 |
+| 5 | DLP (outbound) | LLM02 | — |
+| 6 | Dynamic Routing | LLM03 | ASI04 |
+| 8 | DLP (response) | LLM02 | — |
+
+### UC4 OWASP Mappings
+
+| Step | Product | LLM Labels | ASI Labels |
+|------|---------|------------|------------|
+| 2 | DDoS Protection | LLM10 | — |
+| 3 | Bot Management | LLM10, LLM01 | — |
+| 4 | WAF | LLM02, LLM05 | — |
+| 5 | Rate Limiting | LLM10 | — |
+| 6 | Firewall for AI | LLM01, LLM02, LLM07 | ASI01 |
+| 7 | API Shield | LLM01, LLM05 | ASI02 |
+| 9 | WAF SDD (response) | LLM02 | — |
+
+### ASI Label Rationale
+
+- **ASI01 Agent Goal Hijack** → Products that detect prompt injection / jailbreak (DLP AI Prompt Protection, Guardrails, Firewall for AI) — prompt injection is the primary vector for hijacking agent goals
+- **ASI02 Tool Misuse & Exploitation** → Products that enforce per-tool authorization, rate limiting, or schema validation (Access policies, MCP Portal tool curation, AI Gateway rate limiting, API Shield)
+- **ASI03 Identity & Privilege Abuse** → Products that enforce identity verification and per-action authorization (Access, Access policies with per-tool re-evaluation)
+- **ASI04 Agentic Supply Chain Vulnerabilities** → Products that centralize gateway control or provide multi-provider fallback (MCP Portal, Dynamic Routing)
+- **ASI05 Unexpected Code Execution (RCE)** → Sandboxed execution environments (Workers isolate runtime)
+- **ASI08 Cascading Failures** → Observability that detects failure propagation (audit logging)
+- **ASI10 Rogue Agents** → Audit logging that detects deviations from expected behavior
+
 ## Additional Project Files
 
 - `visual-inspiration/` — 7 reference PNG images used as design inspiration for the flow diagrams

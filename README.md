@@ -96,8 +96,27 @@ npm run deploy      # Deploy to Cloudflare Workers
 | Cloudflare nodes | `#F38020` | Cloudflare products |
 | AI Service nodes | `#10B981` | External AI providers |
 | Resource nodes | `#8B5CF6` | APIs, databases, internal services |
-| Coming Soon | `#6366F1` | Features in development |
+| Coming Soon | `#EAB308` | Features in development |
 | Font | Inter / system-sans | |
+
+## OWASP Framework Mappings
+
+Each use case step includes OWASP risk labels in the step info panel, mapping Cloudflare products to the specific threats they mitigate. Two frameworks are referenced:
+
+### OWASP Top 10 for LLMs 2025
+
+The industry-standard risk taxonomy for Large Language Model applications. Labels use the format `LLM01:2025 Prompt Injection`.
+
+- **Official page**: https://genai.owasp.org/llm-top-10/
+- **Full document**: https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/
+
+### OWASP Top 10 for Agentic Applications 2026
+
+Covers risks specific to autonomous AI agent systems — tool misuse, identity abuse, supply chain attacks, and cascading failures. Labels use the format `ASI01 Agent Goal Hijack`.
+
+- **Official page**: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+
+UC2 (Govern AI Agents) has the most ASI labels as the primary agentic use case. UC1, UC3, and UC4 include selective ASI labels where agentic patterns exist.
 
 ## References
 
@@ -111,6 +130,8 @@ npm run deploy      # Deploy to Cloudflare Workers
 - [Firewall for AI](https://developers.cloudflare.com/waf/detections/firewall-for-ai/)
 - [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)
 - [Ruleset Engine Phases](https://developers.cloudflare.com/ruleset-engine/reference/phases-list/)
+- [OWASP Top 10 for LLMs 2025](https://genai.owasp.org/llm-top-10/)
+- [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
 
 * * * 
 

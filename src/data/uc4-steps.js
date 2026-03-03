@@ -165,6 +165,7 @@ export const uc4 = {
       activeNodes: ['cf-edge', 'ddos'],
       activeEdges: ['e-edge-ddos'],
       docsUrl: 'https://developers.cloudflare.com/ddos-protection/',
+      owasp: ['LLM10:2025 Unbounded Consumption'],
     },
     {
       title: 'Bot Management scores request',
@@ -174,6 +175,7 @@ export const uc4 = {
       activeNodes: ['ddos', 'bot-mgmt'],
       activeEdges: ['e-ddos-bot'],
       docsUrl: 'https://developers.cloudflare.com/bots/',
+      owasp: ['LLM10:2025 Unbounded Consumption', 'LLM01:2025 Prompt Injection'],
     },
     {
       title: 'WAF rules evaluated',
@@ -183,6 +185,7 @@ export const uc4 = {
       activeNodes: ['bot-mgmt', 'waf'],
       activeEdges: ['e-bot-waf'],
       docsUrl: 'https://developers.cloudflare.com/waf/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure', 'LLM05:2025 Improper Output Handling'],
     },
     {
       title: 'Rate limiting enforced',
@@ -192,6 +195,7 @@ export const uc4 = {
       activeNodes: ['waf', 'rate-limiting'],
       activeEdges: ['e-waf-rl'],
       docsUrl: 'https://developers.cloudflare.com/waf/rate-limiting-rules/',
+      owasp: ['LLM10:2025 Unbounded Consumption'],
     },
     {
       title: 'Firewall for AI analyzes prompt',
@@ -201,6 +205,7 @@ export const uc4 = {
       activeNodes: ['rate-limiting', 'firewall-ai'],
       activeEdges: ['e-rl-fwai'],
       docsUrl: 'https://developers.cloudflare.com/waf/detections/firewall-for-ai/',
+      owasp: ['LLM01:2025 Prompt Injection', 'LLM02:2025 Sensitive Information Disclosure', 'LLM07:2025 System Prompt Leakage', 'ASI01 Agent Goal Hijack'],
     },
     {
       title: 'API Shield validates schema & discovers endpoints',
@@ -210,6 +215,7 @@ export const uc4 = {
       activeNodes: ['firewall-ai', 'api-shield'],
       activeEdges: ['e-fwai-api'],
       docsUrl: 'https://developers.cloudflare.com/api-shield/',
+      owasp: ['LLM01:2025 Prompt Injection', 'LLM05:2025 Improper Output Handling', 'ASI02 Tool Misuse & Exploitation'],
     },
     {
       title: 'Clean request reaches your AI app',
@@ -227,6 +233,7 @@ export const uc4 = {
       activeNodes: ['origin-ai-app', 'waf'],
       activeEdges: ['e-origin-waf'],
       docsUrl: 'https://developers.cloudflare.com/waf/managed-rules/reference/sensitive-data-detection/',
+      owasp: ['LLM02:2025 Sensitive Information Disclosure'],
     },
     {
       title: 'Response delivered to end user',
