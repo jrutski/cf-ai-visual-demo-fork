@@ -22,6 +22,7 @@ export const uc4 = {
       type: 'user',
       column: 'left',
       description: 'An end user interacting with your AI-powered application — for example, asking questions in a chatbot, using an AI search feature, or calling an AI API endpoint via the public internet.',
+      docsUrl: 'https://developers.cloudflare.com/reference-architecture/architectures/ai-security-for-apps/',
     },
     {
       id: 'attacker',
@@ -156,6 +157,7 @@ export const uc4 = {
       why: 'Your AI application is never directly exposed to the internet. Cloudflare sits in front as a reverse proxy, so all security evaluations happen at the edge before traffic reaches your origin.',
       activeNodes: ['external-user', 'attacker', 'cf-edge'],
       activeEdges: ['e-user-edge', 'e-attacker-edge'],
+      docsUrl: 'https://developers.cloudflare.com/reference-architecture/architectures/ai-security-for-apps/',
     },
     {
       title: 'DDoS mitigation',
