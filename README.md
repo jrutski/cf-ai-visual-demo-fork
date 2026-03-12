@@ -9,7 +9,7 @@ An interactive, modular frontend web application that visualizes different Cloud
 | 1 | **Secure Workforce Use of GenAI** | Gateway, Access, DLP, RBI, CASB, AI Gateway |
 | 2 | **Govern AI Agents** | Access (MCP Server Portals), DLP for MCP, Workers |
 | 3 | **Build Securely with AI** | AI Gateway (Caching, Rate Limiting, Guardrails, DLP, Dynamic Routing), Workers |
-| 4 | **Protect AI-Powered Apps** | DDoS protection, Bot Management, WAF, Rate Limiting, Firewall for AI, API Shield |
+| 4 | **Protect AI-Powered Apps** | DDoS protection, Bot Management, WAF, Rate Limiting, AI Security for Apps, API Shield |
 
 ## How It Works
 
@@ -127,7 +127,7 @@ UC2 (Govern AI Agents) has the most ASI labels as the primary agentic use case. 
 - [AI Gateway Documentation](https://developers.cloudflare.com/ai-gateway/)
 - [Cloudflare One AI Security Analytics](https://developers.cloudflare.com/cloudflare-one/insights/analytics/ai-security/)
 - [MCP Server Portals](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/)
-- [Firewall for AI](https://developers.cloudflare.com/waf/detections/firewall-for-ai/)
+- [AI Security for Apps](https://developers.cloudflare.com/waf/detections/ai-security-for-apps/)
 - [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)
 - [Ruleset Engine Phases](https://developers.cloudflare.com/ruleset-engine/reference/phases-list/)
 - [OWASP Top 10 for LLMs 2025](https://genai.owasp.org/llm-top-10/)

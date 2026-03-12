@@ -53,7 +53,7 @@ All Cloudflare product names, capabilities, and beta/coming-soon statuses **must
 
 ### Verification workflow
 
-1. **Before every change** involving a Cloudflare product, feature, or capability, query the `cloudflare-docs` MCP server using `cloudflare-docs_search_cloudflare_documentation` with a relevant search term (e.g. "AI Gateway DLP", "CASB integrations", "Firewall for AI").
+1. **Before every change** involving a Cloudflare product, feature, or capability, query the `cloudflare-docs` MCP server using `cloudflare-docs_search_cloudflare_documentation` with a relevant search term (e.g. "AI Gateway DLP", "CASB integrations", "AI Security for Apps").
 2. **Cross-reference** the MCP results with the official docs site at https://developers.cloudflare.com/ — fetch specific pages with `webfetch` when the MCP snippet is insufficient.
 3. **Mark features accurately**: "Coming Soon" if not yet available. Do NOT add Beta / Closed Beta / Early Access / plan-tier flags — keep labels clean.
 4. **Do not hallucinate** product capabilities. If the docs do not confirm a feature, do not include it.
@@ -183,7 +183,7 @@ UC4 ("Protect AI-Powered Apps") covers protecting YOUR AI-powered application fr
 3. **Bot Management** → ML-based bot detection, JS fingerprinting, behavioral analysis
 4. **WAF** → Managed rulesets, custom rules, OWASP protection
 5. **Rate Limiting** → Configurable rate limits per endpoint/IP/session
-6. **Firewall for AI** → Prompt injection detection, PII detection via cf.llm fields, cf-llm endpoint label
+6. **AI Security for Apps** → Prompt injection detection, PII detection via cf.llm fields, cf-llm endpoint label
 7. **API Shield** → Schema validation, mTLS, JWT validation; API Discovery (ML-based) with cf-llm label for GenAI endpoints; API Posture Management auto-labels risk signals
 8. **Your AI Application** → Clean requests reach your origin AI app
 9. **Sensitive Data Detection** → WAF managed ruleset scans response bodies for PII, financial data, secrets (zero latency, log-only)
@@ -191,7 +191,7 @@ UC4 ("Protect AI-Powered Apps") covers protecting YOUR AI-powered application fr
 
 Key corrections made:
 - Sensitive Data Detection is part of the WAF node (not a separate node) — response routes back to WAF for the SDD step
-- Firewall for AI: cf.llm fields populate detection results usable in WAF custom rules
+- AI Security for Apps: cf.llm fields populate detection results usable in WAF custom rules
 - API Shield: API Discovery uses ML + session identifiers; cf-llm managed label identifies LLM-powered endpoints
 - Security Analytics is a Cloudflare product (rendered in center column, not origin column)
 - The flow emphasizes Cloudflare as a reverse proxy protecting the origin
@@ -263,13 +263,13 @@ Two OWASP frameworks are mapped to Cloudflare product nodes across all 4 use cas
 | 3 | Bot Management | LLM10, LLM01 | — |
 | 4 | WAF | LLM02, LLM05 | — |
 | 5 | Rate Limiting | LLM10 | — |
-| 6 | Firewall for AI | LLM01, LLM02, LLM07 | ASI01 |
+| 6 | AI Security for Apps | LLM01, LLM02, LLM07 | ASI01 |
 | 7 | API Shield | LLM01, LLM05 | ASI02 |
 | 9 | WAF SDD (response) | LLM02 | — |
 
 ### ASI Label Rationale
 
-- **ASI01 Agent Goal Hijack** → Products that detect prompt injection / jailbreak (DLP AI Prompt Protection, Guardrails, Firewall for AI) — prompt injection is the primary vector for hijacking agent goals
+- **ASI01 Agent Goal Hijack** → Products that detect prompt injection / jailbreak (DLP AI Prompt Protection, Guardrails, AI Security for Apps) — prompt injection is the primary vector for hijacking agent goals
 - **ASI02 Tool Misuse & Exploitation** → Products that enforce per-tool authorization, rate limiting, or schema validation (Access policies, MCP Portal tool curation, AI Gateway rate limiting, API Shield)
 - **ASI03 Identity & Privilege Abuse** → Products that enforce identity verification and per-action authorization (Access, Access policies with per-tool re-evaluation)
 - **ASI04 Agentic Supply Chain Vulnerabilities** → Products that centralize gateway control or provide multi-provider fallback (MCP Portal, Dynamic Routing)

@@ -1,7 +1,7 @@
 /**
  * UC4 — Protect AI-Powered Apps
  * Cloudflare Reverse Proxy: DDoS Protection, Bot Management, WAF (incl. Sensitive Data Detection),
- * Rate Limiting, Firewall for AI, API Shield
+ * Rate Limiting, AI Security for Apps, API Shield
  *
  * External users access an AI-powered application (chatbot, AI API, LLM-based service)
  * that is proxied through Cloudflare's reverse proxy for protection.
@@ -91,14 +91,14 @@ export const uc4 = {
     },
     {
       id: 'firewall-ai',
-      label: 'Firewall for AI',
+      label: 'AI Security for Apps',
       sublabel: 'Prompt injection, PII detection',
       icon: '\u{1F9E0}',
       type: 'cloudflare',
       column: 'center',
-      product: 'Firewall for AI',
+      product: 'AI Security for Apps',
       description: 'Detects prompt injection attacks, jailbreak attempts, and sensitive data (PII) in JSON request bodies. Populates detection fields (prompt injection score, PII detected) usable in WAF custom rules and rate limiting rules. Use with the cf-llm endpoint label to scope detections to your AI endpoints.',
-      docsUrl: 'https://developers.cloudflare.com/waf/detections/firewall-for-ai/',
+      docsUrl: 'https://developers.cloudflare.com/waf/detections/ai-security-for-apps/',
     },
     {
       id: 'api-shield',
@@ -129,7 +129,7 @@ export const uc4 = {
       type: 'cloudflare',
       column: 'center',
       product: 'Cloudflare Security Analytics',
-      description: 'Centralized dashboard for all security events including Firewall for AI detections, WAF Sensitive Data Detection alerts, bot scores, rate limiting events, and DDoS mitigations. Filter on the cf-llm label for AI-specific analysis.',
+      description: 'Centralized dashboard for all security events including AI Security for Apps detections, WAF Sensitive Data Detection alerts, bot scores, rate limiting events, and DDoS mitigations. Filter on the cf-llm label for AI-specific analysis.',
       docsUrl: 'https://developers.cloudflare.com/waf/analytics/security-analytics/',
     },
   ],
@@ -200,13 +200,13 @@ export const uc4 = {
       owasp: ['LLM10:2025 Unbounded Consumption'],
     },
     {
-      title: 'Firewall for AI analyzes prompt',
-      product: 'Firewall for AI',
-      description: 'Firewall for AI scans the JSON request body for prompt injection attacks, jailbreak attempts, and PII (phone numbers, emails, SSNs, credit cards). Detection results populate cf.llm fields usable in WAF custom rules and rate limiting. Scope to AI endpoints using the cf-llm managed label.',
+      title: 'AI Security for Apps analyzes prompt',
+      product: 'AI Security for Apps',
+      description: 'AI Security for Apps scans the JSON request body for prompt injection attacks, jailbreak attempts, and PII (phone numbers, emails, SSNs, credit cards). Detection results populate cf.llm fields usable in WAF custom rules and rate limiting. Scope to AI endpoints using the cf-llm managed label. Supports custom topic detection and custom prompt extraction.',
       why: 'Prompt injection is the #1 OWASP risk for LLMs (LLM01:2025). Detecting and blocking these attacks at the edge prevents model manipulation and data exfiltration from your AI application.',
       activeNodes: ['rate-limiting', 'firewall-ai'],
       activeEdges: ['e-rl-fwai'],
-      docsUrl: 'https://developers.cloudflare.com/waf/detections/firewall-for-ai/',
+      docsUrl: 'https://developers.cloudflare.com/waf/detections/ai-security-for-apps/',
       owasp: ['LLM01:2025 Prompt Injection', 'LLM02:2025 Sensitive Information Disclosure', 'LLM07:2025 System Prompt Leakage', 'ASI01 Agent Goal Hijack'],
     },
     {
@@ -248,7 +248,7 @@ export const uc4 = {
     {
       title: 'Events logged to Security Analytics',
       product: 'Cloudflare Security Analytics',
-      description: 'All security events are logged to Security Analytics: Firewall for AI detections, WAF Sensitive Data Detection alerts, bot scores, rate limiting events, and DDoS mitigations. Filter on cf-llm labeled endpoints for AI-specific visibility.',
+      description: 'All security events are logged to Security Analytics: AI Security for Apps detections, WAF Sensitive Data Detection alerts, bot scores, rate limiting events, and DDoS mitigations. Filter on cf-llm labeled endpoints for AI-specific visibility.',
       why: 'Centralized security analytics provide visibility into attack patterns targeting your AI application, AI-specific threats, and the effectiveness of your security posture.',
       activeNodes: ['waf', 'security-analytics'],
       activeEdges: ['e-waf-analytics'],
